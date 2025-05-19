@@ -1,0 +1,176 @@
+* {
+  margin: 0;
+  padding: 0;
+  
+}
+
+header {
+  width: 100%;
+}
+
+.navbar {
+  width: 100%;
+}
+
+.navbar_top {
+  background-color: rgb(64, 95, 76);
+  color: white;
+  height: 40px;
+  width: 100%; 
+  top:0px;
+  text-align: center;
+  align-content: center;
+}
+
+.navbar_middle {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.logo {
+  font-size: 35px;
+  font-weight: bold;
+  color: #2e5d48;
+  white-space: nowrap;
+}
+
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1;
+  padding: 6px 10px;
+  border-radius: 5px;
+  flex: 1;
+  max-width: 500px;
+  margin: 0 24px;
+  height: 25px;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  outline: none;
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.actions div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  color: #2e5d48;
+}
+
+
+.user-wrapper {
+  display: flex;
+  align-items: center; 
+  gap: 3rem; 
+}
+
+.user-icon {
+  font-size: 1.8rem; 
+  flex-shrink: 0; 
+}
+
+.user-text {
+  line-height: 1.3; 
+}
+
+.user-text a {
+   text-decoration: none ; 
+  color: #2c5544 ; 
+  transition: color 0.3s ease; 
+  font-weight: bold;
+}
+
+.user-text > div {
+  white-space: nowrap;
+  
+}
+
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+
+.navbar_bottom {
+  background-color: #f8f9fa;
+  padding: 1rem 0;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.navbar_bottom ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 2rem; 
+}
+
+.navbar_bottom li {
+  position: relative;
+  padding: 0 1rem;
+}
+
+
+.navbar_bottom li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 60%;
+  background-color: #2c5544;
+}
+
+.navbar_bottom a {
+  color: #2c5544;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+
+.navbar_bottom a:hover {
+  color: #3a7963;
+}
+
+
+@media (max-width: 768px) {
+  .navbar_bottom ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .navbar_bottom li:not(:last-child)::after {
+    content: none; 
+  }
+
+  .navbar_bottom li {
+    padding: 0.5rem 0;
+  }
+}
