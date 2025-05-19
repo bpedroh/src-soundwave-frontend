@@ -3,7 +3,7 @@ import './App.css'
 import Footer from './components/footer/footer';
 import Navbar from './components/navbar/Navbar'
 import Cadastro from './pages/cadastro/cadastro'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RoutesApp from './routes'
 
 
 
@@ -11,12 +11,7 @@ function App() {
 
   return (
     <>
-      <Navbar/>
-      
-        <Routes>
-          <Route path="/cadastro" element={<Cadastro />} /> 
-      </Routes>
-      <Footer />
+      <RoutesApp/>
     </>
     
   )
