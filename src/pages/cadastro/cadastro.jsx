@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Cadastro.css'
+import {enviarCadastro} from './cadastroService'
 
 export default function Cadastro() {
 
@@ -20,15 +21,15 @@ export default function Cadastro() {
     }));
   };
 
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (formData.senha !== formData.confirmar_senha) {
-      alert('As senhas não coincidem!');
-      return;
+    const resultado = await enviarCadastro(formData);
+    if(resultado.success){
+        alert("Cadastro realizado")
+    }else{
+        alert(resultado.message)
     }
- 
-    console.log('Dados do formulário:', formData);
   };
 
 

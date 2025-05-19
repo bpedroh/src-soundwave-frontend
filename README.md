@@ -1,8 +1,9 @@
-# Soundwabe
+# Soundwave
 
 SOUNDWAVE FRONTEND
 
 Feito em REACT + VITE
 
-NPM I
+NPM i
+
 NPM run dev
