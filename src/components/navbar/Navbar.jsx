@@ -23,7 +23,7 @@ export default function Navbar() {
                  <FaUser className="user-icon" />
                  <div className="user-text">
                     <div><Link to="/cadastro">Cadastre-se</Link></div>
-                    <div>ou faça <a href=''>Login</a></div>
+                    <div>ou faça <Link to="/login">Login</Link></div>
                 </div>
             </div>
             <div className='icon-group'>

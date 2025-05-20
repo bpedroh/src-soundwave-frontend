@@ -1,6 +1,7 @@
-import bcrypt from 'bcryptjs';
+
 
 export async function enviarCadastro(formData) {
+  
   if (formData.senha !== formData.confirmar_senha) {
     return { success: false, message: 'As senhas não coincidem!' };
   }
@@ -20,13 +21,10 @@ export async function enviarCadastro(formData) {
     };
   }
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(formData.senha, salt);
-
   const payload = {
     name: formData.nome,
     username: formData.email,
-    password: hashedPassword
+    password: formData.senha
   };
 
   try {
