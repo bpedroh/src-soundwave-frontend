@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Navbar.css';
 import { FaBars, FaUser, FaShoppingCart, FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
 
 export default function Navbar() {
+
+ const { isAuthenticated, user, logout } = useContext(AuthContext);
 
   return (
     <header>
@@ -18,13 +21,20 @@ export default function Navbar() {
                 <input type="text" placeholder="Buscar por" />
                 <FaSearch />
             </div>
-            <div className="user-wrapper">
-            <div className='icon-group'>
+                 <div className="user-wrapper">
+                 <div className='icon-group'>
                  <FaUser className="user-icon" />
+                 {isAuthenticated ? (
+                    <div className="user-menu">
+                      <span>Olá, {user?.nome}</span>
+                      <button className='logout-button' onClick={logout}>Sair</button>
+                    </div>
+                 ): (
                  <div className="user-text">
                     <div><Link to="/cadastro">Cadastre-se</Link></div>
                     <div>ou faça <Link to="/login">Login</Link></div>
                 </div>
+                 )}
             </div>
             <div className='icon-group'>
                 <FaShoppingCart className="user-icon"/>

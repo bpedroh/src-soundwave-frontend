@@ -3,16 +3,24 @@ footer {
     margin-top: auto; /* Empurra para baixo */
 }
 
+.footer-newsletter + .footer-main {
+  margin-top: 0;
+}
+
+
 .footer-newsletter {
   background-color: #2c5544;
   padding: 2rem 0;
   color: white;
+  margin-bottom: 0;
+ 
 }
 
 .newsletter-content {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+  
 }
 
 .newsletter-form {
@@ -20,6 +28,7 @@ footer {
   gap: 1rem;
   justify-content: center;
   margin-top: 1rem;
+  
 }
 
 .email-input {
