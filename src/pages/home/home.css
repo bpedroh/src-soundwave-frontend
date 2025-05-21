@@ -1,0 +1,53 @@
+.banner_img {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  display: block;
+}
+
+.informative-banner {
+  background-color: #f0efef;
+  height: 85px;
+  width: 100%;
+}
+
+.list-informations {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 65px;
+  padding: 15px;
+}
+
+/* Ícones (React Icons) */
+.service-image {
+  font-size: 28px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Textos */
+.service-text-01 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.service-text-02 {
+  font-size: 12px;
+  margin: 0;
+}
+
+/* Cada bloco de informação */
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+}
+
+.home_container {
+  padding-bottom: 2rem; /* ou use margin-bottom: 2rem */
+}

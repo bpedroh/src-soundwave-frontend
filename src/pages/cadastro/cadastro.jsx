@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import './Cadastro.css'
 import {enviarCadastro} from './cadastroService'
 
 export default function Cadastro() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
     nome: '',
@@ -12,6 +15,7 @@ export default function Cadastro() {
     confirmar_senha: ''
   });
 
+   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,15 +28,15 @@ export default function Cadastro() {
    const handleSubmit = async (e) => {
     e.preventDefault();
     
+    setIsSubmitting(true);
     const resultado = await enviarCadastro(formData);
     if(resultado.success){
-        alert("Cadastro realizado")
+        navigate('/cadastro-realizado')
     }else{
         alert(resultado.message)
     }
+    setIsSubmitting(false);
   };
-
-
     return (
        <div className='cadastro_wrapper'>
         <form className='cadastro_form' onSubmit={handleSubmit}>
@@ -86,8 +90,8 @@ export default function Cadastro() {
           />
         </div>
 
-        <button type="submit" className="submit-btn">
-          Cadastrar
+        <button type="submit" className="submit-btn" disabled={isSubmitting}>
+          {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
         </button>
 
         <p className="login-link">
