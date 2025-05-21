@@ -1,7 +1,9 @@
 import './login.css'
-import {enviarLogin} from './loginService'
-import React, { useState } from 'react';
+import {enviarLogin, getClientObject} from './loginService'
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -9,6 +11,14 @@ export default function Login() {
     senha: '',
   });
 
+  const navigate = useNavigate();
+  const { isAuthenticated } = useContext(AuthContext);
+
+    useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +33,16 @@ export default function Login() {
     
     const resultado = await enviarLogin(formData);
     if(resultado.success){
-        alert("sucesso")
+        const clientObject = await getClientObject(formData);
+        if(clientObject){
+          const mfaEnabled = clientObject.data.mfaEnabled;
+          const userId = clientObject.data.id;
+          if(!mfaEnabled) {
+            navigate(`/mfa/${userId}`)
+          }else{
+            navigate(`/validar-mfa/${userId}`)
+          }
+        }
     }else{
         alert(resultado.message)
     }
@@ -66,7 +85,7 @@ export default function Login() {
           Não tem uma conta? <Link to="/cadastro">Crie agora!</Link>
         </p>
         <p className="cadastro-link">
-          Esqueceu sua senha? <Link to="/cadastro">Recuperar!</Link>
+          Esqueceu sua senha? <Link to="/recuperar-senha">Recuperar!</Link>
         </p>
       </form>
     </div>

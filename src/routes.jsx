@@ -6,6 +6,10 @@ import Home from "./pages/home/home";
 import Cadastro_Realizado from './pages/cadastro_realizado/cadastro_realizado'
 import Login from './pages/login/login'
 import Confirmar_email from './pages/confirmar_email/confirmar_email'
+import Mfa from "./pages/mfa/mfa";
+import ValidarMFA from "./pages/mfa/validarMfa";
+import RecuperarSenha from './pages/recuperar_senha/recuperarSenha'
+import MudarSenha from './pages/mudarSenha/mudarSenha'
 
 export const RoutesApp = () =>{
     return (
@@ -30,6 +34,38 @@ export const RoutesApp = () =>{
                     <>
                         <Navbar />
                         <Login />
+                        <Footer />
+
+                    </>
+                }/>
+                <Route path="/mfa/:id" element={
+                    <>
+                        <Navbar />
+                        <Mfa />
+                        <Footer />
+
+                    </>
+                }/>
+                <Route path="/validar-mfa/:id" element={
+                    <>
+                        <Navbar />
+                        <ValidarMFA />
+                        <Footer />
+
+                    </>
+                }/>
+                <Route path="/recuperar-senha" element={
+                    <>
+                        <Navbar />
+                        <RecuperarSenha />
+                        <Footer />
+
+                    </>
+                }/>
+                <Route path="/mudar-senha/:id" element={
+                    <>
+                        <Navbar />
+                        <MudarSenha />
                         <Footer />
 
                     </>

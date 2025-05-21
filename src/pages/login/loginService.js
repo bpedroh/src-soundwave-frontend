@@ -34,3 +34,24 @@ export async function enviarLogin(formData){
 
 }
 
+export async function getClientObject(formData){
+   const email = encodeURIComponent(formData.email)
+
+    try {
+        const response = await fetch(`http://localhost:8080/client/find-by-email?email=${email}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.ok) {
+            const data = await response.json(); 
+            return { success: true, data };
+        } else {
+            const err = await response.json();
+        return { success: false, message: err.message || 'Erro ao buscar cliente' };
+        }
+    } catch (error) {
+        return { success: false, message: 'Erro ao conectar com o servidor.' };
+    }
+}
+
