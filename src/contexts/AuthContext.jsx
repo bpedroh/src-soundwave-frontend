@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     checkAuth();
@@ -42,6 +42,7 @@ export function AuthProvider({ children }) {
     });
     setIsAuthenticated(false);
     setUser(null);
+    window.location.pathname = '/'
   };
 
   return (

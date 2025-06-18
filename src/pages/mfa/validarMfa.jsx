@@ -1,15 +1,22 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useContext, useEffect } from 'react';
 import './validarMfa.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function ValidarMfa() {
+ 
   const [code, setCode] = useState(Array(6).fill(''));
   const [loading, setLoading] = useState(false);
   const inputs = useRef([]);
   const {id} = useParams();
   const navigate = useNavigate();
-  const { isAuthenticated, checkAuth} = useContext(AuthContext);
+  const {isAuthenticated, checkAuth} = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
 
   const isComplete = useMemo(() => {
     return code.every(digit => digit !== '');

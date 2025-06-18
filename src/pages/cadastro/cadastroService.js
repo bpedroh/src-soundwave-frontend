@@ -1,7 +1,20 @@
+import bcrypt from 'bcryptjs';
+import forge from 'node-forge';
+import {
+    getBackendPublicKey,
+    generateAesKeyAndIv,
+    encryptWithAes,
+    encryptAesKeyWithRsa,
+    encryptIvWithRsa,
+    getCurrentAesKey, 
+    getCurrentIv      
+} from '../../utils/chipherUtils.js'
 
+let backendPublicKeyInstance = null
+let sessionAesKey = null
+let sessionIv = null
 
 export async function enviarCadastro(formData) {
-  
   if (formData.senha !== formData.confirmar_senha) {
     return { success: false, message: 'As senhas não coincidem!' };
   }
@@ -21,26 +34,54 @@ export async function enviarCadastro(formData) {
     };
   }
 
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(formData.senha, salt);
+
   const payload = {
     name: formData.nome,
     username: formData.email,
-    password: formData.senha
+    password: hashedPassword
   };
 
   try {
-    const response = await fetch('http://localhost:8080/client/register', {
+        
+        if (!backendPublicKeyInstance) {
+            backendPublicKeyInstance = await getBackendPublicKey();
+        }
+
+        const { aesKey, iv } = await generateAesKeyAndIv();
+        sessionAesKey = aesKey; 
+        sessionIv = iv;         
+
+        const encryptedAesKeyBase64 = await encryptAesKeyWithRsa(sessionAesKey, backendPublicKeyInstance);
+        const encryptedIvBase64 = await encryptIvWithRsa(sessionIv, backendPublicKeyInstance);
+
+        const jsonPayload = JSON.stringify(payload);
+        const encryptedPayloadBytes = encryptWithAes(jsonPayload, sessionAesKey, sessionIv);
+        const encryptedPayloadBase64 = forge.util.encode64(encryptedPayloadBytes);
+        console.log(encryptedAesKeyBase64)
+
+        const finalPayloadForBackend = {
+            encryptedAesKey: encryptedAesKeyBase64,
+            encryptedIv: encryptedIvBase64,
+            encryptedData: encryptedPayloadBase64,
+        };
+
+    const cadastroResponse = await fetch('http://localhost:8080/client/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(finalPayloadForBackend )
     });
 
-    if (response.ok) {
+    if (cadastroResponse.ok) {
       return { success: true };
     } else {
-      const err = await response.json();
+      const err = await cadastroResponse.json();
       return { success: false, message: err.message || 'Erro no cadastro' };
     }
+
   } catch (error) {
+    console.error('Erro:', error);
     return { success: false, message: 'Erro ao conectar com o servidor.' };
   }
 }
