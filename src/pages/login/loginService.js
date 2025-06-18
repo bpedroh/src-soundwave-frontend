@@ -1,5 +1,3 @@
-import bcrypt from 'bcryptjs';
-
 
 export async function enviarLogin(formData){
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -7,7 +5,6 @@ export async function enviarLogin(formData){
       if (!emailRegex.test(formData.email)) {
         return { success: false, message: 'E-mail inválido!' };
     }
-
 
     const payload = {
         username: formData.email,
@@ -23,6 +20,7 @@ export async function enviarLogin(formData){
         });
 
         if (response.ok) {
+            
             return { success: true };
         } else {
             const err = await response.json();

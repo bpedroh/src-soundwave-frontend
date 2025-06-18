@@ -1,11 +1,17 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './mfa.css'
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Mfa() {
 
     const { id } = useParams();
     const [qrCodeUrl, setQrCodeUrl] = useState(null);
+    const { isAuthenticated, checkAuth} = useContext(AuthContext);
+
+     if (!isAuthenticated) {
+      return navigate('/login');
+    }
 
     useEffect(() => {
         const mfaSetup = async () => {

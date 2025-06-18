@@ -12,13 +12,7 @@ export default function Login() {
   });
 
   const navigate = useNavigate();
-  const { isAuthenticated } = useContext(AuthContext);
-
-    useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/');
-    }
-  }, [isAuthenticated, navigate]);
+  const { isAuthenticated, checkAuth } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,8 +32,10 @@ export default function Login() {
           const mfaEnabled = clientObject.data.mfaEnabled;
           const userId = clientObject.data.id;
           if(!mfaEnabled) {
+            await checkAuth()
             navigate(`/mfa/${userId}`)
           }else{
+            await checkAuth()
             navigate(`/validar-mfa/${userId}`)
           }
         }
