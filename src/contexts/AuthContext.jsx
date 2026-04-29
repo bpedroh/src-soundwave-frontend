@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
   const checkAuth = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/token/check-auth', {
+      const response = await fetch('http://localhost:8082/token/check-auth', {
         method: 'GET',
         credentials: 'include'
       });
@@ -36,7 +36,7 @@ export function AuthProvider({ children }) {
   }, [checkAuth]);
 
   const logout = async () => {
-    await fetch('http://localhost:8080/client/logout', {
+    await fetch('http://localhost:8082/client/logout', {
       method: 'POST',
       credentials: 'include'
     });

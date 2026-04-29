@@ -5,7 +5,7 @@ export async function sendChangePasswordEmail(formData) {
     };
 
     try {
-        const response = await fetch('http://localhost:8080/client/change-password-email', {
+        const response = await fetch('http://localhost:8082/client/change-password-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

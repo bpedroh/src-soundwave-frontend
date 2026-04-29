@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import forge from 'node-forge';
 import {
     getBackendPublicKey,
@@ -6,8 +5,6 @@ import {
     encryptWithAes,
     encryptAesKeyWithRsa,
     encryptIvWithRsa,
-    getCurrentAesKey, 
-    getCurrentIv      
 } from '../../utils/chipherUtils.js'
 
 let backendPublicKeyInstance = null
@@ -29,18 +26,14 @@ export async function enviarCadastro(formData) {
   if (!senhaForteRegex.test(formData.senha)) {
     return {
       success: false,
-      message:
-        'A senha deve conter pelo menos 8 caracteres, incluindo maiúsculas, minúsculas, números e símbolos.'
+      message: 'A senha deve conter pelo menos 8 caracteres, incluindo maiúsculas, minúsculas, números e símbolos.'
     };
   }
-
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(formData.senha, salt);
 
   const payload = {
     name: formData.nome,
     username: formData.email,
-    password: hashedPassword
+    password: formData.senha
   };
 
   try {
@@ -59,7 +52,6 @@ export async function enviarCadastro(formData) {
         const jsonPayload = JSON.stringify(payload);
         const encryptedPayloadBytes = encryptWithAes(jsonPayload, sessionAesKey, sessionIv);
         const encryptedPayloadBase64 = forge.util.encode64(encryptedPayloadBytes);
-        console.log(encryptedAesKeyBase64)
 
         const finalPayloadForBackend = {
             encryptedAesKey: encryptedAesKeyBase64,
@@ -67,10 +59,10 @@ export async function enviarCadastro(formData) {
             encryptedData: encryptedPayloadBase64,
         };
 
-    const cadastroResponse = await fetch('http://localhost:8080/client/register', {
+    const cadastroResponse = await fetch('http://localhost:8082/client/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(finalPayloadForBackend )
+      body: JSON.stringify(finalPayloadForBackend)
     });
 
     if (cadastroResponse.ok) {

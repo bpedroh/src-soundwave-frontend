@@ -12,12 +12,7 @@ export default function ValidarMfa() {
   const navigate = useNavigate();
   const {isAuthenticated, checkAuth} = useContext(AuthContext);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
-
+ 
   const isComplete = useMemo(() => {
     return code.every(digit => digit !== '');
   }, [code]);
@@ -43,7 +38,7 @@ export default function ValidarMfa() {
     const token = code.join('');
 
     try {
-      const response = await fetch(`http://localhost:8080/mfa/validate?userId=${id}&code=${token}`, {
+      const response = await fetch(`http://localhost:8082/mfa/validate?userId=${id}&code=${token}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +51,6 @@ export default function ValidarMfa() {
         alert('Erro: ' + errorText);
       } else {
         alert('Código MFA validado com sucesso!');
-        await checkAuth()
         navigate('/')
       }
     } catch (err) {
