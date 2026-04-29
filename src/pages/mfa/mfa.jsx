@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import './mfa.css'
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -9,14 +9,11 @@ export default function Mfa() {
     const [qrCodeUrl, setQrCodeUrl] = useState(null);
     const { isAuthenticated, checkAuth} = useContext(AuthContext);
 
-     if (!isAuthenticated) {
-      return navigate('/login');
-    }
 
     useEffect(() => {
         const mfaSetup = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/mfa/setup?userId=${id}`, {
+                const response = await fetch(`http://localhost:8082/mfa/setup?userId=${id}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                 });

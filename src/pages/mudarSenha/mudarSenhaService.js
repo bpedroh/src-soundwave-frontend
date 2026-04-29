@@ -22,7 +22,7 @@ export async function changePassword(formData, id) {
 
 
     try {
-        const response = await fetch(`http://localhost:8080/client/change-password/${id}`, {
+        const response = await fetch(`http://localhost:8082/client/change-password/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

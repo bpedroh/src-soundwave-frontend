@@ -7,7 +7,7 @@ let currentIv = null;
 
 export async function getBackendPublicKey() {
     try {
-        const response = await fetch('http://localhost:8080/criptografia/public-key');
+        const response = await fetch('http://localhost:8082/criptografia/public-key');
         if (!response.ok) {
             throw new Error(`Erro ao obter chave pública: ${response.statusText}`);
         }

@@ -14,7 +14,7 @@ export default function Confirmar_email() {
     useEffect(() => {
         const confirmarEmail = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/token/validate-token/${id}/${token}`, {
+                const response = await fetch(`http://localhost:8082/token/validate-token/${id}/${token}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                 });
